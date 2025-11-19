@@ -13,6 +13,15 @@ app.get("/user", (req, res) => {
         console.log(err);
     }
 })
+app.get("/deleteUser/:id", (req, res) => {
+    try {
+        db.deleteUserByID(req.params.id);
+        res.status(200).send('<h1>777</h1>');
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
 app.listen(PORT, () => {
     console.log(`Server is listening on port: ${PORT}`);
 })

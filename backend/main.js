@@ -11,6 +11,7 @@ app.get("/user", (req, res) => {
     }
     catch (err) {
         console.log(err);
+        res.status(500);
     }
 })
 app.get("/deleteUser/:id", (req, res) => {
@@ -20,6 +21,21 @@ app.get("/deleteUser/:id", (req, res) => {
     }
     catch (err) {
         console.log(err);
+        res.status(500);
+    }
+})
+app.get("/createChat", (req, res) => {
+    try {
+        if(db.ChatCreated()){
+            res.status(201).send('<h1>Chat was created</h1>');
+        }
+        else{
+            res.status(200).send('<h1>Chat already exsists</h1>');
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500);
     }
 })
 app.listen(PORT, () => {

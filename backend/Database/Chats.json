@@ -1,28 +1,28 @@
 [
     {
-        "user1ID": {
-            "userID": 1763655190038,
-            "username": "user1763655190038",
-            "password": "pwd3527310380076"
-        },
-        "user2ID": {
+        "chatID": 1763668429342,
+        "user1": {
             "userID": 1763590798636,
             "username": "user1763590798636",
             "password": "pwd3527181597272"
         },
-        "charID": 1763664392153
+        "user2": {
+            "userID": 1763591483434,
+            "username": "user1763591483434",
+            "password": "pwd3527182966868"
+        }
     },
     {
-        "user1ID": {
+        "chatID": 1763668429342,
+        "user1": {
+            "userID": 1763591483434,
+            "username": "user1763591483434",
+            "password": "pwd3527182966868"
+        },
+        "user2": {
             "userID": 1763590798636,
             "username": "user1763590798636",
             "password": "pwd3527181597272"
-        },
-        "user2ID": {
-            "userID": 1763655190038,
-            "username": "user1763655190038",
-            "password": "pwd3527310380076"
-        },
-        "charID": 1763664392154
+        }
     }
 ]

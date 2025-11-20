@@ -23,7 +23,7 @@ export class json_db extends IDataBase {
         if(fs.existsSync(this.ChatsFilePath)){
             let chats = JSON.parse(fs.readFileSync(this.ChatsFilePath));
             for(let i = 0; i < chats.length; i++){
-                if(chats[i].user1ID === user1 && chats[i].user2ID === user2){
+                if(chats[i].user1.userID == user1.userID && chats[i].user2.userID == user2.userID){
                     return true;
                 }
             }
@@ -34,11 +34,9 @@ export class json_db extends IDataBase {
         let users = this.getUsers();
         let user1 = users[Math.floor(Math.random() * users.length)];
         let user2 = users[Math.floor(Math.random() * users.length)];
-        console.log(user1, user2);
         while (user1 === user2){
             user2 = users[Math.floor(Math.random() * users.length)];
         }
-        console.log(user1, user2);
         if(!this.ChatExsists(user1, user2)){
             let chat = new Chat(user1, user2);
             if(fs.existsSync(this.ChatsFilePath)){

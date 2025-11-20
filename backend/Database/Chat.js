@@ -1,10 +1,10 @@
 export class Chat {
     chatID;
-    user1ID;
-    user2ID;
+    user1;
+    user2;
     constructor (user1, user2) {
-        this.charID = Date.now();
-        this.user1ID = user1;
-        this.user2ID = user2;
+        this.chatID = Date.now();
+        this.user1 = user1;
+        this.user2 = user2;
     }
 }

@@ -45,6 +45,9 @@ export class json_db extends IDataBase {
                 this.chats = JSON.parse(fs.readFileSync(this.ChatsFilePath));
             }
             this.chats.push(chat);
+
+            chat = new Chat(user2, user1);
+            this.chats.push(chat);
             fs.writeFileSync(this.ChatsFilePath, JSON.stringify(this.chats, null, 4));
             return chat;
         }

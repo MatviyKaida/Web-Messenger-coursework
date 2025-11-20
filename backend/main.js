@@ -6,7 +6,7 @@ const PORT = 5000;
 
 app.get("/user", (req, res) => {
     try {
-        db.AddUser();
+        db.CreateUser();
         res.status(200).send('<h1>777</h1>');
     }
     catch (err) {
@@ -32,6 +32,16 @@ app.get("/createChat", (req, res) => {
         else{
             res.status(200).send('<h1>Chat already exsists</h1>');
         }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500);
+    }
+})
+app.get("/createMessege", (req, res) => {
+    try {
+        db.CreateMessege();
+        res.status(200).send('<h1>Messege created</h1>');
     }
     catch (err) {
         console.log(err);

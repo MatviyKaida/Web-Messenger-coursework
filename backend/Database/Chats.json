@@ -24,5 +24,31 @@
             "username": "user1763590798636",
             "password": "pwd3527181597272"
         }
+    },
+    {
+        "chatID": 1763672931450,
+        "user1": {
+            "userID": 1763672897406,
+            "username": "user1763672897406",
+            "password": "pwd3527345794812"
+        },
+        "user2": {
+            "userID": 1763591483434,
+            "username": "user1763591483434",
+            "password": "pwd3527182966868"
+        }
+    },
+    {
+        "chatID": 1763672931451,
+        "user1": {
+            "userID": 1763591483434,
+            "username": "user1763591483434",
+            "password": "pwd3527182966868"
+        },
+        "user2": {
+            "userID": 1763672897406,
+            "username": "user1763672897406",
+            "password": "pwd3527345794812"
+        }
     }
 ]

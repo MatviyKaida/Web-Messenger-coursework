@@ -6,16 +6,20 @@ import { generateToken } from "../utils/JWT.js";
 export const signup = async (req, res) => {
     const {username, email, password} = req.body;
     try {
-        if(password < 8) {
-            res.status(400).json({message: "Password must contain at least 8 characters"});
+        if(!password || password.length < 8) {
+            return res.status(400).json({message: "Password must contain at least 8 characters"});
         }
-        const user = await User.findOne({email});
-        if(user){
-            res.status(400).json({message: "User already exists"});
+        const emailCheck = await User.findOne({email});
+        const usernameChaeck = await User.findOne({username});
+        if(emailCheck){
+            return res.status(400).json({message: "User with this e-mail already exists"});
+        }
+        if (usernameChaeck){
+            return res.status(400).json({message: "User with this username already exists"});
         }
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
-        const userProfile = new UserProfile()
+        const userProfile = new UserProfile();
         userProfile.save();
         const newUser = new User({
             username: username,
@@ -26,7 +30,7 @@ export const signup = async (req, res) => {
         if(newUser){
             const token = generateToken(newUser._id, res);
             await newUser.save();
-            res.status(201).json({
+            return res.status(201).json({
                 _id: newUser._id,
                 username: newUser.username,
                 email: newUser.email,
@@ -35,7 +39,7 @@ export const signup = async (req, res) => {
             });
         }
         else {
-            res.status(400).json({message: "Invalid user creation data"});
+            return res.status(400).json({message: "Invalid user creation data"});
         }
     }
     catch (err){

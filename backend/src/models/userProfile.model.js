@@ -18,4 +18,5 @@ const userProfileSchema = new mongoose.Schema({
         default: ""
     }
 });
-export const UserProfile = mongoose.model("UserProfile", userProfileSchema);
+const UserProfile = mongoose.model("UserProfile", userProfileSchema);
+export default UserProfile;

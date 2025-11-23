@@ -35,7 +35,7 @@ export const signup = async (req, res) => {
                 username: newUser.username,
                 email: newUser.email,
                 password:newUser.password,
-                userProfileID: newUser.userProfileID._id
+                userProfileID: newUser.userProfileID
             });
         }
         else {
@@ -82,5 +82,14 @@ export const logout = (req, res) => {
     }
     catch (err) {
         console.log(`Logout error: ${err}`);
+    }
+}
+export const checkAuth = (req, res) => {
+    try {
+        res.status(200).json(req.user.toObject());
+    }
+    catch (err) {
+        console.log(`checkAuth controller error ${err}`);
+        res.status(500).json({message: "Internal server error"});
     }
 }

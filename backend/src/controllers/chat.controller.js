@@ -5,8 +5,6 @@ export const createChat = async (req, res) => {
     try{
         const user1 = req.user;
         const user2 = await User.findOne({username: req.params.username});
-        console.log(user1);
-        console.log(user2);
         if(!user2){
             return res.status(404).json({message: "User you're trying to create chat with doesn't exsist"});
         }
@@ -31,4 +29,23 @@ export const createChat = async (req, res) => {
         res.status(500).json({message: "Internal server error"});
     }
 
+}
+export const deleteChat = async (req, res) => {
+    try {
+        const user1 = req.user;
+        const user2 = await User.findOne({username: req.params.username});
+        if(!user2){
+            return res.status(404).json({message: "User you're trying to create chat with doesn't exsist"});
+        }
+        const chat = await Chat.findOneAndDelete({
+            $or: [
+                {user1ID: user1._id, user2ID: user2._id},
+                {user1ID: user2._id, user2ID: user1._id}
+            ]
+        });
+        res.status(200).json({chat, message: "Chat deleted"});
+    }
+    catch (err) {
+        console.log(`Chat deletion error: ${err}`);
+    }
 }

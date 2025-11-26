@@ -64,7 +64,7 @@ export const login = async (req, res) => {
             username: user.username,
             email: user.email,
             password: user.password,
-            userProfileID: user.userProfileID
+            userProfileID: user.userProfileID.id
         });
 
     }

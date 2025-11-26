@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const chatSchema = new mongoose.Schema({
-    user1: {
+    user1ID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    user2: {
+    user2ID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }

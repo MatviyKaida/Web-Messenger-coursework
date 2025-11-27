@@ -1,0 +1,35 @@
+import Message from "../models/messages.model.js";
+import Chat from "../models/chat.model.js";
+
+export const getMesssages = async (req, res) => {
+    try {
+        const user = req.user;
+    }
+    catch (err) {
+        console.log(`Get messages error: ${err}`);
+        res.status(500).json({message: "Internal server error"});
+    }
+
+}
+
+export const createMessage = async (req, res) => {
+    try {
+        const sender = req.user;
+        const chat = req.body.chatID;
+        const textContent = req.body.textContent;
+        const message = new Message({
+            senderID: sender._id,
+            chatID: chat._id,
+            textContent: textContent
+        });
+        const saved = await message.save();
+        if(saved) {
+            return res.status(201).json(message);
+        }
+        res.json({message: "Message wasn't saved to database"});
+    }
+    catch (err) {
+        console.log(`createMessage error: ${err}`);
+        res.status(500).json({message: "Internal server error"});
+    }
+}

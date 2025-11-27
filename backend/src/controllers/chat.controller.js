@@ -49,3 +49,20 @@ export const deleteChat = async (req, res) => {
         console.log(`Chat deletion error: ${err}`);
     }
 }
+export const getChatList = async (req, res) => {
+    try{
+        const user = req.user;
+        const userChats = await Chat.find({
+            $or: [
+                {user1ID: user._id},
+                {user2ID: user._id}
+            ]
+        })
+        res.status(200).json({message: "User chats sent successfully"});
+        console.log(userChats);
+        return userChats;
+    }
+    catch (err) {
+        console.log(`Get chat list error: ${err}`);
+    }
+}

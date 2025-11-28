@@ -1,7 +1,38 @@
-export default function App() {
-  return (
+import Navbar from "./components/Navbar.jsx";
+import { Route, Routes, Navigate } from "react-router-dom";
+import HomePage from "./pages/HomePage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import SettingsPage from "./pages/SettingsPage.jsx";
+import SignUpPage from "./pages/SignUpPage.jsx";
+import { useAuthStore } from "./store/UseAuthStore.js";
+import { useEffect } from "react";
+import { Loader } from "lucide-react";
+
+const App = () => {
+  const {authUser, checkAuth, isCheckingAuth} = useAuthStore();
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+  console.log({authUser});
+  if(isCheckingAuth && !authUser) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="size-10 animate-spin"/>
+      </div>
+    )
+  }  
+ return (
     <div>
-        <button className="btn btn-primary">button</button>
+        <Navbar />
+        <Routes>
+            <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login"/>} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
     </div>
   )
 }
+export default App;

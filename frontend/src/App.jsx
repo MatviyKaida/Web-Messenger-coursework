@@ -8,6 +8,7 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import { useAuthStore } from "./store/UseAuthStore.js";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const {authUser, checkAuth, isCheckingAuth} = useAuthStore();
@@ -25,6 +26,18 @@ const App = () => {
  return (
     <div>
         <Navbar />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: "#2a303d", 
+              color: "#a6adbb",
+              borderRadius: "0.75rem", 
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)", 
+              padding: "1rem",
+            },
+          }}
+        />
         <Routes>
             <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login"/>} />
             <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/"/>} />

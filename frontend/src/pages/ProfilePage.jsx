@@ -12,9 +12,9 @@ const ProfilePage = () => {
   const [bio, setBio] = useState("");
 
   useEffect(() => {
-    setFirstName(authUser?.firstName || "");
-    setLastName(authUser?.lastName || "");
-    setBio(authUser?.bio || "");
+    setFirstName(authUser?.firstName ?? "");
+    setLastName(authUser?.lastName ?? "");
+    setBio(authUser?.bio ?? "");
   }, [authUser]);
 
   const handleImageUpload = async (event) => {

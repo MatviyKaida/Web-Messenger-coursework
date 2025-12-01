@@ -84,9 +84,20 @@ export const logout = (req, res) => {
         console.log(`Logout error: ${err}`);
     }
 }
-export const checkAuth = (req, res) => {
+export const checkAuth = async (req, res) => {
     try {
-        res.status(200).json(req.user.toObject());
+        const user = await User.findById(req.user._id).populate("userProfileID");
+        res.status(200).json({
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            createdAt: user.createdAt,
+
+            firstName: user.userProfileID.firstName,
+            lastName: user.userProfileID.lastName,
+            bio: user.userProfileID.bio,
+            profilePic: user.userProfileID.profilePicUrl
+        })
     }
     catch (err) {
         console.log(`checkAuth controller error ${err}`);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuthStore } from "../store/UseAuthStore.js";
-import { Camera, Mail, User } from "lucide-react";
+import { Camera, Mail, User, Clock8 } from "lucide-react";
 
 const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
@@ -83,23 +83,6 @@ const ProfilePage = () => {
           {/* Inputs */}
           <div className="space-y-6">
 
-            {/* Username */}
-            <div className="space-y-1.5">
-              <div className="text-sm text-zinc-400 flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Username
-              </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.username}</p>
-            </div>
-
-            {/* Email */}
-            <div className="space-y-1.5">
-              <div className="text-sm text-zinc-400 flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                Email Address
-              </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.email}</p>
-            </div>
 
             {/* First Name */}
             <div className="space-y-1.5">
@@ -145,7 +128,7 @@ const ProfilePage = () => {
           <button
             onClick={handleSave}
             disabled={isUpdatingProfile}
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 transition rounded-lg text-white font-semibold disabled:opacity-50"
+            className="w-full py-3 bg-[#5f66cc] hover:bg-[#555cbc] transition rounded-lg text-white font-semibold disabled:opacity-50"
           >
             {isUpdatingProfile ? "Saving..." : "Save Changes"}
           </button>
@@ -155,7 +138,24 @@ const ProfilePage = () => {
             <h2 className="text-lg font-medium mb-4">Account Information</h2>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between py-2 border-b border-zinc-700">
-                <span>Member Since</span>
+                <div className="flex items-center justify-between gap-1">
+                  <User className="h-5 w-5"/>
+                  <span>Username</span>
+                </div>
+                <span>{authUser?.username}</span>
+              </div>
+              <div className="flex items-center justify-between py-2 border-b border-zinc-700">
+                <div className="flex items-center justify-between gap-1">
+                  <Mail className="h-5 w-5"/>
+                  <span>Email</span>
+                </div>
+                <span>{authUser?.email}</span>
+              </div>
+              <div className="flex items-center justify-between py-2 border-b border-zinc-700">
+                <div className="flex items-center justify-between gap-1">
+                  <Clock8 className="h-5 w-5"/>
+                  <span>Member Since</span>
+                </div>
                 <span>{authUser.createdAt?.split("T")[0]}</span>
               </div>
               <div className="flex items-center justify-between py-2">

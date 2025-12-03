@@ -57,6 +57,18 @@ export const getChatList = async (req, res) => {
                 {user1ID: user._id},
                 {user2ID: user._id}
             ]
+        }).populate({
+            path: "user1ID",
+            populate: {
+                path: "userProfileID",
+                model: "userProfile"
+            }
+        }).populate({
+            path: "user2ID",
+            populate: {
+                path: "userProfileID",
+                model: "userProfile"
+            }
         })
         res.status(200).json({message: "User chats sent successfully"});
         console.log(userChats);

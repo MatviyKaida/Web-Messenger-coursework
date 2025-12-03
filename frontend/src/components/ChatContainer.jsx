@@ -7,12 +7,20 @@ import MessageInput from "./MessageInput.jsx";
 const ChatContainer = () => {
   const { messages, getMessages, areMessagesLoading, selectedChat } = useChatStore();
   const { authUser } = useAuthStore();
-  if(areMessagesLoading) {
-    return <div>Loading...</div>
-  }
+
   useEffect(() => {
     getMessages(selectedChat._id);
   }, [selectedChat._id, getMessages]);
+
+  if(areMessagesLoading) {
+    return (
+      <div className="flex-1 flex flex-col overflow-auto">
+        <ChatHeader />
+        <MessageSkeleton />
+        <MessageInput />
+      </div>
+    );
+  }
   return (
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
@@ -21,16 +29,16 @@ const ChatContainer = () => {
         {messages.map((message) => (
           <div
             key={message._id}
-            className={`chat ${message.senderID === authUser._id ? "chat-end" : "chat-start"}`}
+            className={`chat ${message.senderID._id === authUser._id ? "chat-end" : "chat-start"}`}
             ref={messageEndRef}
           >
             <div className=" chat-image avatar">
               <div className="size-10 rounded-full border">
                 <img
                   src={
-                    message.senderID === authUser._id
+                    message.senderID._id === authUser._id
                       ? authUser.profilePic || "/avatar.png"
-                      : (selectedChat.user1ID._id === authUser._id ? selectedChat.user2ID.userProfileID.profilePicUrl : selectedChat.user1ID.userProfileID.profilePicUrl) || "/avatar.png"
+                      : message.senderID.userProfile.profilePicUrl || "/avatar.png"
                   }
                   alt="profile pic"
                 />
@@ -47,7 +55,6 @@ const ChatContainer = () => {
           </div>
         ))}
       </div>
-
       <MessageInput />
     </div>
   )

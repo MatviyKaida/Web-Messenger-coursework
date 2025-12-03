@@ -12,6 +12,7 @@ router.delete("/deleteChat/:username", protectRoute, deleteChat);
 router.get("/getChatList", protectRoute, getChatList);
 
 router.post("/messages/:chatID/createMessage", protectRoute, createMessage);
-router.get ("/messages/:chatID/getMessages", protectRoute, getMesssagesList)
+
+router.get ("/messages/:chatID/getMessageList", protectRoute, getMesssagesList);
 
 export default router;

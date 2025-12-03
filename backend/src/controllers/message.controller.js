@@ -3,7 +3,12 @@ import Chat from "../models/chat.model.js";
 
 export const getMesssagesList = async (req, res) => {
     try {
-        const messages = await Message.find({chatID: req.params.chatID}).populate("userProfileID");
+        const messages = await Message.find({chatID: req.params.chatID})
+        .populate({path: "senderID",
+            populate: {
+                path: "userProfileID",
+                model: "UserProfile"
+            }});
         res.status(200).json(messages);
     }
     catch (err) {

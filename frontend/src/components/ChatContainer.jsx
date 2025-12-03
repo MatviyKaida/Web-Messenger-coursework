@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useChatStore } from "../store/UseChatStore.js";
 import { useAuthStore } from "../store/UseAuthStore.js";
+import ChatHeader from "./ChatHeader.jsx";
+import MessageInput from "./MessageInput.jsx";
 
 const ChatContainer = () => {
   const { messages, getMessages, areMessagesLoading, selectedChat } = useChatStore();
@@ -28,7 +30,7 @@ const ChatContainer = () => {
                   src={
                     message.senderID === authUser._id
                       ? authUser.profilePic || "/avatar.png"
-                      : selectedChat.profilePic || "/avatar.png"
+                      : (selectedChat.user1ID._id === authUser._id ? selectedChat.user2ID.userProfileID.profilePicUrl : selectedChat.user1ID.userProfileID.profilePicUrl) || "/avatar.png"
                   }
                   alt="profile pic"
                 />
@@ -40,14 +42,7 @@ const ChatContainer = () => {
               </time>
             </div>
             <div className="chat-bubble flex flex-col">
-              {message.image && (
-                <img
-                  src={message.image}
-                  alt="Attachment"
-                  className="sm:max-w-[200px] rounded-md mb-2"
-                />
-              )}
-              {message.text && <p>{message.text}</p>}
+              {message.textContent && <p>{message.textContent}</p>}
             </div>
           </div>
         ))}

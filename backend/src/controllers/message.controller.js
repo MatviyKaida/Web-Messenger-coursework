@@ -4,6 +4,8 @@ import Chat from "../models/chat.model.js";
 export const getMesssages = async (req, res) => {
     try {
         const user = req.user;
+        const chatID = req.params.chatID;
+
     }
     catch (err) {
         console.log(`Get messages error: ${err}`);

@@ -5,7 +5,6 @@ import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import profileRoutes from "./routes/profile.route.js";
 import chatRoutes from "./routes/chat.route.js";
-import messageRoutes from "./routes/message.route.js";
 import cors from "cors";
 
 dotenv.config();
@@ -28,7 +27,6 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/chats", chatRoutes);
 
-app.use("/api/messages", messageRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port: ${PORT}`);

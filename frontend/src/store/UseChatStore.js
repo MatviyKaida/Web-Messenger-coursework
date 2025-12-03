@@ -22,5 +22,18 @@ export const useChatStore = create((set) => ({
         finally {
             set({areChatsLoading: false});
         }
+    },
+    getMessages: async (chatId) => {
+        set({areMessagesLoading: true});
+        try {
+
+        }
+        catch(err) {
+            console.log(`Get mesages error: ${err}`);
+            toast.error(err.response.data.message);
+        }
+        finally {
+            set({areMessagesLoading: false});
+        }
     }
 }))

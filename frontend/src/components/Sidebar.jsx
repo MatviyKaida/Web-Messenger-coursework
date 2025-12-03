@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react'
-import { useChatStore } from '../store/UseChatStore'
+import { useChatStore } from '../store/UseChatStore.js';
+import { useAuthStore } from '../store/UseAuthStore.js';
+import SidebarSkeleton from "./skeletons/SidebarSkeleton.jsx";
+import { Users } from "lucide-react";
 
 const Sidebar = () => {
     const { getChats, chats, selectedChat, setSelectedChat, areChatsLoading } = useChatStore();
+    const {authUser} = useAuthStore();
     useEffect(() => {
         getChats()
     }, [chats]);
@@ -10,7 +14,48 @@ const Sidebar = () => {
         return <SidebarSkeleton />
     }
   return (
-    <div>Sidebar</div>
+    <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
+        <div className="border-b border-base-300 w-full p-5">
+            <div className="flex items-center gap-2">
+                <Users className="size-6" />
+                <span className="font-medium hidden lg:block">Chats</span>
+            </div>
+        </div>
+
+      <div className="overflow-y-auto w-full py-3">
+        {chats.map((chat) => (
+          <button
+            key={chat._id}
+            onClick={() => setSelectedChat(chat)}
+            className={`
+              w-full p-3 flex items-center gap-3
+              hover:bg-base-300 transition-colors
+              ${selectedChat?._id === chat._id ? "bg-base-300 ring-1 ring-base-300" : ""}
+            `}
+          >
+            <div className="relative mx-auto lg:mx-0">
+              <img
+                src={authUser._id !== chat.user1ID._id ? chat.user1ID.profilePicURL : chat.user2ID.profilePicURL || "/avatar.png"}
+                className="size-12 object-cover rounded-full"
+              />
+              {onlineUsers.includes(chat._id) && (
+                <span
+                  className="absolute bottom-0 right-0 size-3 bg-green-500 
+                  rounded-full ring-2 ring-zinc-900"
+                />
+              )}
+            </div>
+
+            {/* User info - only visible on larger screens */}
+            <div className="hidden lg:block text-left min-w-0">
+              <div className="font-medium truncate">{authUser._id !== chat.user1ID._id ? chat.user1ID.firstName + chat.user1ID.lastName : chat.user2ID.firstName + chat.user2ID.lastName }</div>
+              <div className="text-sm text-zinc-400">
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </aside>
   )
 }
 

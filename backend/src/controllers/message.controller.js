@@ -1,7 +1,7 @@
 import Message from "../models/messages.model.js";
 import Chat from "../models/chat.model.js";
 
-export const getMesssages = async (req, res) => {
+export const getMesssagesList = async (req, res) => {
     try {
         const messages = await Message.find({chatID: req.params.chatID});
         res.status(200).json(messages);

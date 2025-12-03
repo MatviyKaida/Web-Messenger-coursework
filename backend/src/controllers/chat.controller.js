@@ -61,18 +61,17 @@ export const getChatList = async (req, res) => {
             path: "user1ID",
             populate: {
                 path: "userProfileID",
-                model: "userProfile"
+                model: "UserProfile"
             }
         }).populate({
             path: "user2ID",
             populate: {
                 path: "userProfileID",
-                model: "userProfile"
+                model: "UserProfile"
             }
         })
-        res.status(200).json({message: "User chats sent successfully"});
+        res.status(200).json({message: "User chats sent successfully", chats: userChats});
         console.log(userChats);
-        return userChats;
     }
     catch (err) {
         console.log(`Get chat list error: ${err}`);

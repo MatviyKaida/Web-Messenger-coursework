@@ -82,8 +82,6 @@ const ProfilePage = () => {
 
           {/* Inputs */}
           <div className="space-y-6">
-
-
             {/* First Name */}
             <div className="space-y-1.5">
               <div className="text-sm text-zinc-400">First Name</div>

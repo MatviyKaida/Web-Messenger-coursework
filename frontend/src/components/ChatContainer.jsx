@@ -3,6 +3,7 @@ import { useChatStore } from "../store/UseChatStore.js";
 import { useAuthStore } from "../store/UseAuthStore.js";
 import ChatHeader from "./ChatHeader.jsx";
 import MessageInput from "./MessageInput.jsx";
+import MessageSkeleton from "./skeletons/MessageSkeleton.jsx";
 
 const ChatContainer = () => {
   const { messages, getMessages, areMessagesLoading, selectedChat } = useChatStore();

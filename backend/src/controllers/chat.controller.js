@@ -70,8 +70,7 @@ export const getChatList = async (req, res) => {
                 model: "UserProfile"
             }
         })
-        res.status(200).json({message: "User chats sent successfully", chats: userChats});
-        console.log(userChats);
+        return res.status(200).json({message: "User chats sent successfully", chats: userChats});
     }
     catch (err) {
         console.log(`Get chat list error: ${err}`);

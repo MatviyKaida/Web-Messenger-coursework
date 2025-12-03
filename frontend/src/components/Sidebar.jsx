@@ -5,11 +5,15 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton.jsx";
 import { Users } from "lucide-react";
 
 const Sidebar = () => {
-    const { getChats, chats, selectedChat, setSelectedChat, areChatsLoading } = useChatStore();
+    const getChats = useChatStore(state => state.getChats);
+    const chats = useChatStore(state => state.chats);
+    const selectedChat = useChatStore(state => state.selectedChat);
+    const setSelectedChat = useChatStore(state => state.setSelectedChat);
+    const areChatsLoading = useChatStore(state => state.areChatsLoading);
     const {authUser} = useAuthStore();
     useEffect(() => {
         getChats()
-    }, [chats]);
+    }, []);
     if(areChatsLoading) {
         return <SidebarSkeleton />
     }
@@ -35,20 +39,17 @@ const Sidebar = () => {
           >
             <div className="relative mx-auto lg:mx-0">
               <img
-                src={authUser._id !== chat.user1ID._id ? chat.user1ID.userProfileID.profilePicURL : chat.user2ID.userProfileID.profilePicURL || "/avatar.png"}
+                src={(authUser._id !== chat.user1ID._id 
+                  ? chat.user1ID?.userProfileID?.profilePicUrl 
+                  : chat.user2ID?.userProfileID?.profilePicUrl
+                ) || "/avatar.png"}
                 className="size-12 object-cover rounded-full"
               />
-              {onlineUsers.includes(chat._id) && (
-                <span
-                  className="absolute bottom-0 right-0 size-3 bg-green-500 
-                  rounded-full ring-2 ring-zinc-900"
-                />
-              )}
             </div>
 
             {/* User info - only visible on larger screens */}
             <div className="hidden lg:block text-left min-w-0">
-              <div className="font-medium truncate">{authUser._id !== chat.user1ID._id ? chat.user1ID.userProfileID.firstName + chat.user1ID.userProfileID.lastName : chat.user2ID.userProfileID.firstName + chat.user2ID.userProfileID.lastName }</div>
+              <div className="font-medium truncate">{authUser._id !== chat.user1ID._id ? chat.user1ID.userProfileID.firstName + " " + chat.user1ID.userProfileID.lastName : chat.user2ID.userProfileID.firstName + " " + chat.user2ID.userProfileID.lastName }</div>
               <div className="text-sm text-zinc-400">
               </div>
             </div>

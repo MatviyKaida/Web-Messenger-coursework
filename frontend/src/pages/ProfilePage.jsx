@@ -3,14 +3,17 @@ import { useAuthStore } from "../store/UseAuthStore.js";
 import { Camera, Mail, User, Clock8 } from "lucide-react";
 
 const ProfilePage = () => {
-  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+  const { authUser, isUpdatingProfile, updateProfile, checkAuth } = useAuthStore();
+   useEffect(() => {
+      checkAuth();
+  }, []);
 
   const [selectedImg, setSelectedImage] = useState("");
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [bio, setBio] = useState("");
-
+ 
   useEffect(() => {
     setFirstName(authUser?.firstName ?? "");
     setLastName(authUser?.lastName ?? "");

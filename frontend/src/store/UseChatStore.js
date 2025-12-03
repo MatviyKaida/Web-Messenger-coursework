@@ -12,8 +12,8 @@ export const useChatStore = create((set) => ({
         set({areChatsLoading: true});
         try {
             const res = await axiosInstance.get("/chats/getChatList");
-            set({chats: res.data});
-            console.log(res.data);
+            set({chats: res.data.chats});
+            console.log(res.data.chats);
         }
         catch (err) {
             console.log(`Getting chats failed: ${err}`);
@@ -23,10 +23,10 @@ export const useChatStore = create((set) => ({
             set({areChatsLoading: false});
         }
     },
-    getMessages: async (chatId) => {
+    getMessages: async (chatID) => {
         set({areMessagesLoading: true});
         try {
-            const res = await axiosInstance.get("/chats/messages/:chatID/getMessages");
+            const res = await axiosInstance.get(`/chats/messages/${chatID}/getMessages`);
             set({messages: res.data});
         }
         catch(err) {

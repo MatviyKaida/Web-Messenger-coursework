@@ -33,7 +33,15 @@ export const createMessage = async (req, res) => {
         });
         const saved = await message.save();
         if(saved) {
-            return res.status(201).json(message);
+            const populatedMessage = await Message.findById(saved._id)
+                .populate({
+                    path: "senderID",
+                    populate: {
+                        path: "userProfileID",
+                        model: "UserProfile"
+                    }
+                });
+            return res.status(201).json(populatedMessage);
         }
         res.json({message: "Message wasn't saved to database"});
     }

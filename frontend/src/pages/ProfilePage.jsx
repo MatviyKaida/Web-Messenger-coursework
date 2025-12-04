@@ -39,7 +39,7 @@ const ProfilePage = () => {
       bio,
     };
     if (selectedImg !== "") {
-      updateData.profilePicURL = selectedImg;
+      updateData.profilePicUrl = selectedImg;
     }
     await updateProfile(updateData);
   };

@@ -4,11 +4,11 @@ import UserProfile from "../models/userProfile.model.js";
 export const updateUserProfile = async (req, res) => {
     try {
         const user = req.user;
-        const {firstName, lastName, bio, profilePicURL} = req.body;
+        const {firstName, lastName, bio, profilePicUrl} = req.body;
         let updatedUserProfile = await UserProfile.findById(user.userProfileID);
 
-        if(profilePicURL){
-            const uploadResponse = await cloudinary.uploader.upload(profilePicURL);
+        if(profilePicUrl){
+            const uploadResponse = await cloudinary.uploader.upload(profilePicUrl);
             if(uploadResponse){
                 updatedUserProfile.profilePicUrl = uploadResponse.secure_url;
             }

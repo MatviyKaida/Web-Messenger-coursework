@@ -21,7 +21,7 @@ export const getMesssagesList = async (req, res) => {
 export const createMessage = async (req, res) => {
     try {
         const sender = req.user;
-        const chat = await Chat.findById(req.body.chatID);
+        const chat = await Chat.findById(req.params.chatID);
         if(!chat){
             res.status(400).json({message: "Can't create message: Chat doesn't exsist"});
         }

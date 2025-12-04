@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useChatStore } from "../store/UseChatStore.js";
 import { useAuthStore } from "../store/UseAuthStore.js";
 import ChatHeader from "./ChatHeader.jsx";
@@ -8,7 +8,7 @@ import MessageSkeleton from "./skeletons/MessageSkeleton.jsx";
 const ChatContainer = () => {
   const { messages, getMessages, areMessagesLoading, selectedChat } = useChatStore();
   const { authUser } = useAuthStore();
-
+  const messageEndRef = useRef(null);
   useEffect(() => {
     getMessages(selectedChat._id);
   }, [selectedChat._id, getMessages]);
@@ -39,16 +39,16 @@ const ChatContainer = () => {
                   src={
                     message.senderID._id === authUser._id
                       ? authUser.profilePic || "/avatar.png"
-                      : message.senderID.userProfile.profilePicUrl || "/avatar.png"
+                      : message.senderID.userProfileID.profilePicUrl || "/avatar.png"
                   }
                   alt="profile pic"
                 />
               </div>
             </div>
             <div className="chat-header mb-1">
-              <time className="text-xs opacity-50 ml-1">
+              {/* <time className="text-xs opacity-50 ml-1">
                 {formatMessageTime(message.createdAt)}
-              </time>
+              </time> */}
             </div>
             <div className="chat-bubble flex flex-col">
               {message.textContent && <p>{message.textContent}</p>}

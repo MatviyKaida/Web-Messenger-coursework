@@ -28,15 +28,16 @@ export const createMessage = async (req, res) => {
         }
         const textContent = req.body.textContent;
         const imageContent = req.body.AttachedPicUrl;
+        let AttachedPicUrl;
         if(imageContent){
             const uploadResponse = await cloudinary.uploader.upload(imageContent);
-            const AttachedPicUrl = uploadResponse.secure_url;
+            AttachedPicUrl = uploadResponse.secure_url;
         }
         const message = new Message({
             senderID: sender._id,
             chatID: chat._id,
             textContent: textContent,
-            AttachedPicUrl: AttachedPicUrl
+            AttachedPicUrl: AttachedPicUrl 
         });
         const saved = await message.save();
         if(saved) {

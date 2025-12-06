@@ -4,6 +4,7 @@ import { useAuthStore } from "../store/UseAuthStore.js";
 import ChatHeader from "./ChatHeader.jsx";
 import MessageInput from "./MessageInput.jsx";
 import MessageSkeleton from "./skeletons/MessageSkeleton.jsx";
+import { formatMessageTime } from "../lib/utils.js";
 
 const ChatContainer = () => {
   const { messages, getMessages, areMessagesLoading, selectedChat } = useChatStore();
@@ -53,7 +54,7 @@ const ChatContainer = () => {
             </div>
             <div className="chat-header mb-1">
               <time className="text-xs opacity-50 ml-1">
-                {message.createdAt}
+                {formatMessageTime(message.createdAt)}
               </time>
             </div>
             <div className="chat-bubble flex flex-col">

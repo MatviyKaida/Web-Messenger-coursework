@@ -11,7 +11,7 @@ const MessageInput = () => {
   const { createMessage } = useChatStore();
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
-    if(!file.type.startsWith("image/")){
+    if(!file?.type.startsWith("image/")){
       toast.error("Select an image file");
       return;
     }

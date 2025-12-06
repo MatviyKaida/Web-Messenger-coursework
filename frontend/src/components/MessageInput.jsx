@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 const MessageInput = () => {
   const [textContent, setTextContent] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
+  const [isCreatingMessage, setIsCreatingMessage] = useState(false);
   const fileInputRef = useRef(null);
 
   const { createMessage } = useChatStore();
@@ -26,6 +27,7 @@ const MessageInput = () => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
   const handleCreateMessage = async (event) => {
+    setIsCreatingMessage(true);
     event.preventDefault();
     if(!textContent.trim() && !imagePreview){
       return;
@@ -43,6 +45,9 @@ const MessageInput = () => {
     }
     catch(err) {
       console.log(`Handle create message error: ${err}`);
+    }
+    finally {
+      setIsCreatingMessage(false);
     }
   }
   return (
@@ -94,7 +99,7 @@ const MessageInput = () => {
         <button
           type="submit"
           className="btn btn-sm btn-circle"
-          disabled={!textContent.trim() && !imagePreview}
+          disabled={(!textContent.trim() && !imagePreview) || isCreatingMessage}
         >
           <Send size={22} />
         </button>

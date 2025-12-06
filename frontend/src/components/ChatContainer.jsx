@@ -9,6 +9,12 @@ const ChatContainer = () => {
   const { messages, getMessages, areMessagesLoading, selectedChat } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
+  const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   useEffect(() => {
     getMessages(selectedChat._id);
   }, [selectedChat._id, getMessages]);

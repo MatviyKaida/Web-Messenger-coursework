@@ -12,6 +12,10 @@ const messageSchema = new mongoose.Schema({
     senderID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+    },
+    AttachedPicUrl: {
+        type: String,
+        default: ""
     }
 },
 {timestamps: true}

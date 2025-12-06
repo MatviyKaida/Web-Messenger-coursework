@@ -1,5 +1,6 @@
 import Message from "../models/messages.model.js";
 import Chat from "../models/chat.model.js";
+import cloudinary from "../lib/cloudinary.js";
 
 export const getMesssagesList = async (req, res) => {
     try {
@@ -26,10 +27,16 @@ export const createMessage = async (req, res) => {
             res.status(400).json({message: "Can't create message: Chat doesn't exsist"});
         }
         const textContent = req.body.textContent;
+        const imageContent = req.body.AttachedPicUrl;
+        if(imageContent){
+            const uploadResponse = await cloudinary.uploader.upload(imageContent);
+            const AttachedPicUrl = uploadResponse.secure_url;
+        }
         const message = new Message({
             senderID: sender._id,
             chatID: chat._id,
-            textContent: textContent
+            textContent: textContent,
+            AttachedPicUrl: AttachedPicUrl
         });
         const saved = await message.save();
         if(saved) {

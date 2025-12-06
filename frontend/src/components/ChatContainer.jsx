@@ -46,11 +46,18 @@ const ChatContainer = () => {
               </div>
             </div>
             <div className="chat-header mb-1">
-              {/* <time className="text-xs opacity-50 ml-1">
-                {formatMessageTime(message.createdAt)}
-              </time> */}
+              <time className="text-xs opacity-50 ml-1">
+                {message.createdAt}
+              </time>
             </div>
             <div className="chat-bubble flex flex-col">
+              {message.AttachedPicUrl && (
+                <img
+                  src={message.AttachedPicUrl}
+                  alt="Attachment"
+                  className="sm:max-w-[200px] rounded-md mb-2"
+                />
+              )}
               {message.textContent && <p>{message.textContent}</p>}
             </div>
           </div>

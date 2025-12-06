@@ -6,10 +6,10 @@ import cookieParser from "cookie-parser";
 import profileRoutes from "./routes/profile.route.js";
 import chatRoutes from "./routes/chat.route.js";
 import cors from "cors";
+import {app, server} from "./lib/socket.js";
 
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT;
 
 app.use(express.json({ limit: "10mb" }));
@@ -28,7 +28,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/chats", chatRoutes);
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is listening on port: ${PORT}`);
     connectDB();
 })

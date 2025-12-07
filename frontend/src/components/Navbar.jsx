@@ -1,9 +1,35 @@
 import { useAuthStore } from "../store/UseAuthStore.js";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { LogOut, MessageSquare, Settings, User } from "lucide-react";
+import { LogOut, MessageSquare, Settings, User, Search } from "lucide-react";
+import toast from "react-hot-toast";
+import { useChatStore } from "../store/UseChatStore.js";
 
 const Navbar = () => {
+  const {createChat} = useChatStore();
   const {logout, authUser} = useAuthStore();
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleCreateChat = async () => {
+    const username = searchValue.trim()
+
+    if(!username) {
+      return;
+    }
+    if (username === authUser?.username) {
+      toast.error("You cannot create chat with yourself");
+      return;
+    }
+
+    await createChat(username);
+    setSearchValue("");
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleCreateChat();
+    }
+  };
   return (
     <header
       className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
@@ -19,7 +45,26 @@ const Navbar = () => {
               <h1 className="text-lg font-bold">Messanger</h1>
             </Link>
           </div>
-
+          {authUser && (
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search username..."
+                  className="input input-sm pr-10"
+                  value={searchValue}
+                  onChange={(event) => setSearchValue(event.target.value)}
+                  onKeyDown={handleKeyDown}
+                />
+                <button
+                  className="absolute right-1 top-1/2 -translate-y-1/2 btn btn-sm"
+                  onClick={handleCreateChat}
+                >
+                  <Search className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
           <div className="flex items-center gap-2">
             <Link
               to={"/settings"}

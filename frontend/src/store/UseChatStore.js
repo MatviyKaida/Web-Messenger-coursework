@@ -23,6 +23,17 @@ export const useChatStore = create((set, get) => ({
             set({areChatsLoading: false});
         }
     },
+    createChat: async (username) => {
+        try {
+            const res = await axiosInstance.post(`/chats/createChat/${username}`);
+            toast.success(res.data.message || "Chat created successfully");
+            const chatsRes = await axiosInstance.get("/chats/getChatList");
+            set({ chats: chatsRes.data.chats });
+        } catch (err) {
+            console.log(`Create chat error: ${err}`);
+            toast.error(err.response?.data?.message || "Failed to create chat");
+        }
+    },
     getMessages: async (chatID) => {
         set({areMessagesLoading: true});
         try {

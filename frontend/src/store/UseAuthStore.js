@@ -95,13 +95,21 @@ export const useAuthStore = create(
                     return;
                 const socket = io(BASE_URL);
                 socket.connect();
+                set({socket: socket});
             },
             disconnectSocket: () => {
                 if(get().socket?.connected) get().socket.disconnect();
             }
     }),
     {
-        name: "auth-storage"
+        name: "auth-storage",
+        partialize: (state) => ({
+        authUser: state.authUser,
+        isSigningUp: state.isSigningUp,
+        isLoggingIn: state.isLoggingIn,
+        isUpdatingProfile: state.isUpdatingProfile,
+        isCheckingAuth: state.isCheckingAuth,
+      }),
     })
 
 )

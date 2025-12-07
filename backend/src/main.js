@@ -10,6 +10,7 @@ import {app, server} from "./lib/socket.js";
 
 dotenv.config();
 
+
 const PORT = process.env.PORT;
 
 app.use(express.json({ limit: "10mb" }));

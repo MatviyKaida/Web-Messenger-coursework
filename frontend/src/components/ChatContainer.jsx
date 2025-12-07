@@ -8,7 +8,7 @@ import { formatMessageTime } from "../lib/utils.js";
 
 
 const ChatContainer = () => {
-  const { messages, getMessages, areMessagesLoading, selectedChat, setMessages } = useChatStore();
+  const { messages, getMessages, areMessagesLoading, selectedChat, addMessage } = useChatStore();
   const { authUser, socket } = useAuthStore();
   const messageEndRef = useRef(null);
   const scrollToBottom = () => {
@@ -18,7 +18,7 @@ const ChatContainer = () => {
     if (!socket || !selectedChat) return;
 
     const handleNewMessage = (message) => {
-      setMessages((prev) => [...prev, message]);
+      addMessage(message); // додаємо нове повідомлення в state
     };
 
     socket.on("newMessage", handleNewMessage);
@@ -29,7 +29,8 @@ const ChatContainer = () => {
       socket.off("newMessage", handleNewMessage);
       socket.emit("leaveRoom", selectedChat._id);
     };
-  }, [socket, selectedChat, setMessages]);
+}, [socket, selectedChat, addMessage]);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);

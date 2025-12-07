@@ -16,6 +16,12 @@ io.on("connection", (socket) => {
         socket.join(chatID);
         console.log(`Socket ${socket.id} joined chat ${chatID}`);
     });
+    socket.on("joinRoom", (chatID) => {
+        socket.join(chatID);
+    });
+    socket.on("leaveRoom", (chatID) => {
+        socket.leave(chatID);
+    });
     socket.on("disconnect", ()=> {
         console.log("User disconnected", socket.id);
     })

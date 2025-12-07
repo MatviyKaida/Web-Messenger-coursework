@@ -9,5 +9,11 @@ const io = new Server (server, {
         origin: ["http://localhost:5173"]
     }
 })
+io.on("connection", (socket) => {
+    console.log("User connected", socket.id);
+    socket.on("disconnect", ()=> {
+        console.log("User disconnected");
+    })
+})
 
 export {app, server, io};

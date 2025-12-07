@@ -6,13 +6,30 @@ import MessageInput from "./MessageInput.jsx";
 import MessageSkeleton from "./skeletons/MessageSkeleton.jsx";
 import { formatMessageTime } from "../lib/utils.js";
 
+
 const ChatContainer = () => {
-  const { messages, getMessages, areMessagesLoading, selectedChat } = useChatStore();
-  const { authUser } = useAuthStore();
+  const { messages, getMessages, areMessagesLoading, selectedChat, setMessages } = useChatStore();
+  const { authUser, socket } = useAuthStore();
   const messageEndRef = useRef(null);
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+ useEffect(() => {
+    if (!socket || !selectedChat) return;
+
+    const handleNewMessage = (message) => {
+      setMessages((prev) => [...prev, message]);
+    };
+
+    socket.on("newMessage", handleNewMessage);
+
+    socket.emit("joinRoom", selectedChat._id);
+
+    return () => {
+      socket.off("newMessage", handleNewMessage);
+      socket.emit("leaveRoom", selectedChat._id);
+    };
+  }, [socket, selectedChat, setMessages]);
   useEffect(() => {
     scrollToBottom();
   }, [messages]);

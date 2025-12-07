@@ -1,6 +1,7 @@
 import Message from "../models/messages.model.js";
 import Chat from "../models/chat.model.js";
 import cloudinary from "../lib/cloudinary.js";
+import { io } from "../lib/socket.js";
 
 export const getMesssagesList = async (req, res) => {
     try {
@@ -49,6 +50,7 @@ export const createMessage = async (req, res) => {
                         model: "UserProfile"
                     }
                 });
+            io.to(chat._id.toString()).emit("newMessage", populatedMessage);
             return res.status(201).json(populatedMessage);
         }
         res.json({message: "Message wasn't saved to database"});

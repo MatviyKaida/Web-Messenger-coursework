@@ -30,12 +30,16 @@ export const signup = async (req, res) => {
         if(newUser){
             const token = generateToken(newUser._id, res);
             await newUser.save();
+            const populatedUser = await User.findById(newUser._id).populate("userProfileID");
             return res.status(201).json({
-                _id: newUser._id,
-                username: newUser.username,
-                email: newUser.email,
-                password:newUser.password,
-                userProfileID: newUser.userProfileID
+                _id: populatedUser._id,
+                username: populatedUser.username,
+                email: populatedUser.email,
+                password: populatedUser.password,
+                firstName: populatedUser.userProfileID.firstName,
+                lastName: populatedUser.userProfileID.lastName,
+                bio: populatedUser.userProfileID.bio,
+                profilePic: populatedUser.userProfileID.profilePicUrl,
             });
         }
         else {
@@ -50,7 +54,7 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const {email, password} = req.body;
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).populate("userProfileID");
         if(!user) {
             return res.status(400).json({message: "Invalid credentials"});
         }
@@ -64,7 +68,11 @@ export const login = async (req, res) => {
             username: user.username,
             email: user.email,
             password: user.password,
-            userProfileID: user.userProfileID
+            createdAt: user.createdAt,
+            firstName: user.userProfileID.firstName,
+            lastName: user.userProfileID.lastName,
+            bio: user.userProfileID.bio,
+            profilePic: user.userProfileID.profilePicUrl,
         });
 
     }

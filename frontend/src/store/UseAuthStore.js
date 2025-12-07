@@ -34,6 +34,7 @@ export const useAuthStore = create(
                 set({isSigningUp: true});
                 try {
                     const res = await axiosInstance.post("/auth/signup", data);
+                    await get().checkAuth();
                     set({authUser: res.data});
                     toast.success("Account created Successfully");
                     get().connectSocket();
@@ -50,6 +51,7 @@ export const useAuthStore = create(
                 set({isLoggingIn: true});
                 try {
                     const res = await axiosInstance.post("/auth/login", data);
+                    await get().checkAuth();
                     set({authUser: res.data});
                     toast.success("Logged in successfully");
                     get().connectSocket()
@@ -60,6 +62,16 @@ export const useAuthStore = create(
                 }
                 finally {
                     set({isLoggingIn: false});
+                }
+            },
+            fetchUserProfile: async () => {
+                const { authUser } = get();
+                if (!authUser) return;
+                try {
+                    const res = await axiosInstance.get(`/profile/getUserProfile/${authUser._id}`);
+                    set({ authUser: { ...authUser, profilePic: res.data.profilePicUrl } });
+                } catch (err) {
+                    console.log(`Fetching user profile error: ${err}`);
                 }
             },
             logout: async () => {

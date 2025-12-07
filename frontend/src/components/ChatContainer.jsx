@@ -18,7 +18,7 @@ const ChatContainer = () => {
     if (!socket || !selectedChat) return;
 
     const handleNewMessage = (message) => {
-      addMessage(message); // додаємо нове повідомлення в state
+      addMessage(message);
     };
 
     socket.on("newMessage", handleNewMessage);

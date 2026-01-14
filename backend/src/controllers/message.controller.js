@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 
 const MESSAGE_SECRET_KEY = process.env.MESSAGE_SECRET;
 
-export const getMesssagesList = async (req, res) => {
+export const getMessagesList = async (req, res) => {
     try {
         const messages = await Message.find({chatID: req.params.chatID})
         .populate({path: "senderID",
@@ -72,6 +72,24 @@ export const createMessage = async (req, res) => {
     }
     catch (err) {
         console.log(`createMessage error: ${err}`);
+        res.status(500).json({message: "Internal server error"});
+    }
+}
+
+export const deleteMessage = async (req, res) => {
+    try {
+        const chatID = req.params.chatID;
+        const messageID = req.params.messageID;
+        const deletedMessage = await Message.findOneAndDelete({chatID: chatID, _id: messageID});
+        if(deletedMessage){
+            res.status(200).json({message: "Message was deleted"});
+        }
+        else {
+            res.status(404).json({message: "Message not found"});
+        }
+    }
+    catch (err) {
+        console.log(`deleteMessage error: ${err}`);
         res.status(500).json({message: "Internal server error"});
     }
 }

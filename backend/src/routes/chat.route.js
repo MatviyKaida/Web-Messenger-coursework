@@ -1,7 +1,7 @@
 import express from "express";
 import { createChat, deleteChat, getChatList } from "../controllers/chat.controller.js";
 import { protectRoute } from "../middleware/auth.middleware.js";
-import { createMessage, getMesssagesList } from "../controllers/message.controller.js";
+import { createMessage, getMessagesList, deleteMessage } from "../controllers/message.controller.js";
 
 const router = express.Router();
 
@@ -13,6 +13,8 @@ router.get("/getChatList", protectRoute, getChatList);
 
 router.post("/messages/:chatID/createMessage", protectRoute, createMessage);
 
-router.get ("/messages/:chatID/getMessageList", protectRoute, getMesssagesList);
+router.get("/messages/:chatID/getMessageList", protectRoute, getMessagesList);
+
+router.delete("/messages/:chatID/:messageID", protectRoute, deleteMessage);
 
 export default router;

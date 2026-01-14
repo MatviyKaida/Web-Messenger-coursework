@@ -49,7 +49,10 @@ const Sidebar = () => {
 
             {/* User info - only visible on larger screens */}
             <div className="hidden lg:block text-left min-w-0">
-              <div className="font-medium truncate">{authUser._id !== chat.user1ID._id ? chat.user1ID.userProfileID.firstName + " " + chat.user1ID.userProfileID.lastName : chat.user2ID.userProfileID.firstName + " " + chat.user2ID.userProfileID.lastName }</div>
+              <div className="font-medium truncate">{authUser._id !== chat.user1ID._id 
+                ? chat.user1ID.userProfileID.firstName + " " + chat.user1ID.userProfileID.lastName 
+                : chat.user2ID.userProfileID.firstName + " " + chat.user2ID.userProfileID.lastName 
+              }</div>
               <div className="text-sm text-zinc-400">
               </div>
             </div>

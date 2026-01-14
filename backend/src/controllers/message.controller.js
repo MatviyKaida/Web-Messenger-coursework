@@ -82,6 +82,7 @@ export const deleteMessage = async (req, res) => {
         const messageID = req.params.messageID;
         const deletedMessage = await Message.findOneAndDelete({chatID: chatID, _id: messageID});
         if(deletedMessage){
+            io.to(chat._id.toString()).emit("messageDeleted");
             res.status(200).json({message: "Message was deleted"});
         }
         else {
